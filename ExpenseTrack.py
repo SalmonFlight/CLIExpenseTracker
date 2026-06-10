@@ -46,6 +46,21 @@ def main():
         display_menu()
         choice = input("Choose (1-7): ")
         
+        if choice == "1":
+            print("\nLets add expenses")
+            
+            while True:
+                try:
+                    amount = float(input("Enter amount(HK$): "))
+                    if amount <= 0:
+                        print("Amount must be more than 0")
+                        continue
+                except ValueError:
+                    print("Enter a valid number")
+            
+            
+                
+        
         if choice == "7":
             print("Goodbye bro")
             break
