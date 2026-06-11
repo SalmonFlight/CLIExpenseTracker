@@ -58,7 +58,22 @@ def main():
                 except ValueError:
                     print("Enter a valid number")
             
+            categories = ["Food", "Transport", "Home Bills", "Shopping", "Health", "Others"]
+            print("\nCategories:")
+            for i, cat in enumerate(categories, 1):
+                print(f"{i}. {cat}")
             
+            while True:
+                try:
+                    cat_choice = int(input("Select category(1-6): "))
+                    if 1 <= cat_choice <= 6:
+                        category = categories[cat_choice - 1]
+                        break
+                    print("Choose a number from 1 to 6")
+                except ValueError:
+                    print("Choice must be a number")
+                    
+                        
                 
         
         if choice == "7":
