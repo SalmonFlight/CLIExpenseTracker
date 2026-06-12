@@ -40,5 +40,12 @@
     "category": "Food",
     "description": "fr",
     "date": "2026-06-11"
+  },
+  {
+    "id": 7,
+    "amount": 325.0,
+    "category": "Transport",
+    "description": "mtr tst",
+    "date": "2026-06-13"
   }
 ]

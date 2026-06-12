@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime 
+import math 
 
 def display_menu():
     print()
@@ -95,7 +96,38 @@ def main():
             input("\nPress enter to continue...")
     
         elif choice == "2":
-            print()
+            if not expenses:
+                print("\nNo expenses yet...")
+                input("Press enter to continue")
+            else:
+                page = 1
+                loop = 0
+                total_page = math.ceil(len(expenses)/10)
+                    
+                for i, expense in enumerate(expenses,1):
+                    if loop == 0:
+                        start_num = (page - 1) * 10 + 1
+                        end_num = min(page * 10, len(expenses))
+                        print(f"\nPage {page}/{total_page} expenses ({start_num}-{end_num}):")
+                        print(f"{'ID':<4} {'Date':<12} {'Amount':<10} {'Description'}")
+                        
+                    print(f"{expense['id']:<4} {expense['date']:<12} {expense['amount']:<10.2f} {expense['description']} ")
+                    loop += 1
+                    
+                    if (i % 10) == 0 and i != len(expenses):
+                        user_input = input("\nPress Enter for next page, or 'q' to exit: ")
+                        if user_input.lower() == 'q':
+                            break
+                        else:
+                            page += 1
+                            loop = 0
+                input("\nPress Enter to continue...")
+
+                        
+                    
+                    
+                    
+                
             
         elif choice == "3":
             if not expenses:
