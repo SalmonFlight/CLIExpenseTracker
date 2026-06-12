@@ -123,12 +123,6 @@ def main():
                             loop = 0
                 input("\nPress Enter to continue...")
 
-                        
-                    
-                    
-                    
-                
-            
         elif choice == "3":
             if not expenses:
                 print("\n No expenses yet")
