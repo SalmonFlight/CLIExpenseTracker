@@ -167,21 +167,62 @@ def main():
             print("To be added")
         
         elif choice == "6":
-            print("To be added")
-        
+            while True:
+                try:
+                    month = input("\nEnter month (YYYY-MM) (press enter to use the current month and year): ")
+                    
+                    if month == "":
+                        current_year = datetime.today().year
+                        current_month = datetime.today().month
+                        month = f"{current_year}-{current_month:02d}"
+                
+                    if len(month) != 7 or month[4] != "-":
+                        print("Please type in YYYY-MM format")
+                        continue
+                    
+                    year_num = int(month[0:4])
+                    if year_num < 1900 or year_num > 2100:
+                        print("Please input a valid year (1900-2100)")
+                        continue
+                    
+                    month_num = int(month[5:7])
+                    if month_num > 12 or month_num < 1:
+                        print("Please input a valid month (1-12)")
+                        continue
+                    
+                    categories = {"Food" : 0, "Transport" : 0, "Home Bills" : 0, "Shopping" : 0, "Health" : 0, "Others" : 0}
+                    total = 0
+                    
+                    for expense in expenses:
+                        if expense["date"].startswith(month):
+                            if expense["category"] in categories:
+                                categories[expense["category"]] += expense["amount"]
+                                total += expense["amount"]
+                    
+                    print(f"\n{'='*40}")
+                    print(f"Monthly Summary: {month}")
+                    print(f"{'='*40}")
+
+                    for cat, amount in categories.items():
+                        if amount > 0:
+                            print(f"{cat:<15} ${amount:>10.2f}")
+
+                    print(f"{'-'*40}")
+                    print(f"{'TOTAL':<15} ${total:>10.2f}")
+                    print(f"{'='*40}")
+                
+                    input("\nPress enter to continue")
+                    break
+                      
+                except ValueError:
+                    print("Please type in YYYY-MM format")
+               
         elif choice == "7":
-            print("Goodbye.")
+            print("\nGoodbye.")
             break   
         
         else:
             print("Input a number from 1 to 7")    
                 
                 
-     
-                        
-                
-        
-
-            
-
 main()
