@@ -164,8 +164,41 @@ def main():
                     print("Please type in a number")
          
         elif choice == "5":
-            print("To be added")
-        
+            if not expenses:
+                print("\nNo expenses to delete")
+            else:
+                page = 1
+                loop = 0
+                total_page = math.ceil(len(expenses)/10)
+                    
+                for i, expense in enumerate(expenses,1):
+                    if loop == 0:
+                        start_num = (page - 1) * 10 + 1
+                        end_num = min(page * 10, len(expenses))
+                        print(f"\n--- Current Expenses (Page {page}/{total_page}) ---")
+                        print(f"{'ID':<4} {'Date':<12} {'Amount':<10} {'Description'}")
+                        
+                    print(f"{expense['id']:<4} {expense['date']:<12} {expense['amount']:<10.2f} {expense['description']} ")
+                    loop += 1
+                    
+                    if (i % 10) == 0 and i != len(expenses):
+                        user_input = input("\nPress Enter for next page, or 'd' to select an expense to delete: ")
+                        if user_input.lower() == 'd':
+                            id_delete = int(input("Enter the ID of the expense you wish to delete: "))
+                            if id_delete <= len(expenses) and id_delete >= 0:
+                                if id_delete == 0:
+                                    pass
+                                else:
+                                    expenses.pop(id_delete - 1)
+                                    print(f"ID {id_delete} deleted")
+                                break                                                     
+                            else:
+                                print("ID not Found") 
+                        else:
+                            page += 1
+                            loop = 0
+                input("\nPress Enter to continue...")
+                 
         elif choice == "6":
             while True:
                 try:
