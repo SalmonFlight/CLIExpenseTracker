@@ -47,5 +47,26 @@
     "category": "Transport",
     "description": "mtr tst",
     "date": "2026-06-13"
+  },
+  {
+    "id": 8,
+    "amount": 45.0,
+    "category": "Transport",
+    "description": "TST",
+    "date": "2026-06-15"
+  },
+  {
+    "id": 9,
+    "amount": 36.0,
+    "category": "Shopping",
+    "description": "stussy",
+    "date": "2026-06-15"
+  },
+  {
+    "id": 10,
+    "amount": 34.0,
+    "category": "Health",
+    "description": "ankle broke",
+    "date": "2026-06-15"
   }
 ]

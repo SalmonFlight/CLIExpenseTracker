@@ -60,7 +60,7 @@ def main():
                     else:
                         break
                 except ValueError:
-                    print("Enter a valid number")
+                    print("Enter a valid number...")
             
             categories = ["Food", "Transport", "Home Bills", "Shopping", "Health", "Others"]
             print("\nCategories:")
@@ -69,7 +69,7 @@ def main():
             
             while True:
                 try:
-                    cat_choice = int(input("Select category(1-6): "))
+                    cat_choice = int(input("\nSelect category(1-6): "))
                     if 1 <= cat_choice <= 6:
                         category = categories[cat_choice - 1]
                         break
@@ -77,7 +77,7 @@ def main():
                 except ValueError:
                     print("Choice must be a number")
             
-            description = input("Enter a description(Optional): ")
+            description = input("Enter a description (Optional): ")
             
             date = get_date()
             
@@ -93,12 +93,12 @@ def main():
             save_expenses(expenses)
             
             print(f"Added {amount}HK$ for {category} on {date}")
-            input("\nPress enter to continue...")
+            input("\nPress Enter to continue...")
     
         elif choice == "2":
             if not expenses:
                 print("\nNo expenses yet...")
-                input("Press enter to continue")
+                input("Press Enter to continue...")
             else:
                 page = 1
                 loop = 0
@@ -126,13 +126,28 @@ def main():
         elif choice == "3":
             if not expenses:
                 print("\n No expenses yet")
-            else:
-                total = 0 
-                for dictionary in expenses:
-                    total += dictionary['amount']
-                print(f"\nYou have spent a total of {total}")
-            input("\nPress enter to continue...")
-            
+            else: 
+                categories = {"Food" : 0, "Transport" : 0, "Home Bills" : 0, "Shopping" : 0, "Health" : 0, "Others" : 0}
+                total = 0
+                    
+                for expense in expenses:
+                    categories[expense["category"]] += expense["amount"]
+                    total += expense["amount"]
+                    
+                print(f"\n{'='*40}")
+                print(f"Total Spending Summary")
+                print(f"{'='*40}")
+
+                for cat, amount in categories.items():
+                    if amount > 0:
+                        print(f"{cat:<15} ${amount:>10.2f}")
+
+                print(f"{'-'*40}")
+                print(f"{'TOTAL':<15} ${total:>10.2f}")
+                print(f"{'='*40}")
+                
+                input("\nPress Enter to continue...")
+                       
         elif choice == "4":
             categories = ["Food", "Transport", "Home Bills", "Shopping", "Health", "Others"]
             
@@ -156,7 +171,7 @@ def main():
                                 print(f"{dictionary['id']:<4} {dictionary['date']:<12} {dictionary['amount']:<10.2f} {dictionary['description']} ")
                         if not found:
                             print(f"No expenses found in {categories[filter_category - 1]}")
-                        input("\nPress enter to continue...")
+                        input("\nPress Enter to continue...")
                         break           
                     print("please input a number from 1 to 6")
                     
@@ -170,7 +185,8 @@ def main():
                 page = 1
                 loop = 0
                 total_page = math.ceil(len(expenses)/10)
-                    
+                delete_condition = False
+                
                 for i, expense in enumerate(expenses,1):
                     if loop == 0:
                         start_num = (page - 1) * 10 + 1
@@ -184,19 +200,44 @@ def main():
                     if (i % 10) == 0 and i != len(expenses):
                         user_input = input("\nPress Enter for next page, or 'd' to select an expense to delete: ")
                         if user_input.lower() == 'd':
-                            id_delete = int(input("Enter the ID of the expense you wish to delete: "))
-                            if id_delete <= len(expenses) and id_delete >= 0:
-                                if id_delete == 0:
-                                    pass
-                                else:
-                                    expenses.pop(id_delete - 1)
-                                    print(f"ID {id_delete} deleted")
-                                break                                                     
-                            else:
-                                print("ID not Found") 
+                            delete_condition = True
+                            break
                         else:
                             page += 1
                             loop = 0
+                            
+                if not delete_condition and expenses:
+                    user_input = input("\nPress 'd' to delete an expense, or Enter to continue: ")
+                    if user_input.lower() == 'd':
+                        delete_condition = True
+                            
+                if delete_condition:
+                    while True:
+                        try:
+                            id_delete = int(input("\nEnter ID to delete (or 0 to cancel): "))
+                            if id_delete == 0:
+                                print("Operation cancelled")
+                                break
+                    
+                            found = False
+                            for idx, exp in enumerate(expenses):
+                                if exp["id"] == id_delete:
+                                    deleted_amount = exp["amount"]
+                                    deleted_category = exp["category"]
+                                    expenses.pop(idx)
+                                    save_expenses(expenses)
+                                    print(f"\n✅ Deleted: ${deleted_amount} for {deleted_category}")
+                                    found = True
+                                    break
+                    
+                            if not found:
+                                print("ID not found...")
+                                continue
+                            break
+                    
+                        except ValueError:
+                            print("Only integers are allowed")
+                                
                 input("\nPress Enter to continue...")
                  
         elif choice == "6":
@@ -244,7 +285,7 @@ def main():
                     print(f"{'TOTAL':<15} ${total:>10.2f}")
                     print(f"{'='*40}")
                 
-                    input("\nPress enter to continue")
+                    input("\nPress Enter to continue...")
                     break
                       
                 except ValueError:
