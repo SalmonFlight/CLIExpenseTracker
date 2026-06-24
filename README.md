@@ -28,7 +28,9 @@ It is a command line expense tracker that helps users track and manage their dai
 - Standard Library – No external dependencies
 
 📸 Sample Output
+
 <img width="565" height="429" alt="image" src="https://github.com/user-attachments/assets/28209df3-a0f3-4178-ad6f-44e4794aef84" />
+
 
 📝 Code Structure
 
@@ -56,7 +58,7 @@ This is a personal project, but feedback and suggestions are welcome!
 
 👨‍💻 Author
 Aaron 
-GitHub: @FeiDuanFish
+GitHub: [@FeiDuanFish](https://github.com/FeiDuanFish)
 
 ⭐ Show Your Support
 If you found this project helpful, please give it a ⭐ on GitHub!
