@@ -1,12 +1,28 @@
+"""
+Personal Expense Tracker: A command-line application for managing personal expenses.
+
+Available Features:
+- Add, view, filter, and delete expenses
+- View total spending by category
+- Monthly spending summaries
+- Persistent JSON storage
+- Pagination for viewing and deleting expenses
+"""
+
+
 import json
 import os       
 from datetime import datetime 
 import math
 
+#Constants
 CATEGORIES = ["Food", "Transport", "Home Bills", "Shopping", "Health", "Others"] 
 DATA_FILE = "expenses.json"
 
-def display_menu():
+#Display Functions
+
+def display_menu(): 
+    """Display the main menu options."""
     print()
     print("-"*40)
     print("      Personal Expenses Tracker")
@@ -19,18 +35,35 @@ def display_menu():
     print("6. Monthly summary")
     print("7. Exit")
     print("-"*40)
-    
+
+#Data Persistence Functions 
+  
 def load_expenses():
+    """Load expenses from the JSON data file.
+
+    Returns:
+        list: List of expense dictionaries, or empty list if file doesn't exist.
+    """
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE) as file:
             return json.load(file)
     return []
     
 def save_expenses(expenses):
+    """Save expenses to the JSON data file.
+
+    Args:
+        expenses (list): List of expense dictionaries to save.
+    """
     with open(DATA_FILE, "w") as file:
         json.dump(expenses, file, indent=2)
         
 def get_date():
+    """Get a valid date from the user.
+
+    Returns:
+        str: Date in YYYY-MM-DD format. Defaults to today if user presses Enter.
+    """
     today = datetime.today().strftime("%Y-%m-%d")
     
     while True:
@@ -44,8 +77,18 @@ def get_date():
         except ValueError:
             print("Invalid date formatting, please try again...\n")
             continue
-              
+
+#Feature Functions for Main Menu
+            
 def add_expenses(expenses):
+    """Add a new expense to the list.
+
+    Prompts user for amount, category, description, and date.
+    Saves the expense to JSON file.
+
+    Args:
+        expenses (list): The current list of expenses (modified in place).
+    """
     print("\nLets add expenses")
             
     while True:
@@ -92,6 +135,11 @@ def add_expenses(expenses):
         break
 
 def paginated_expenses(expenses):
+    """Display expenses with pagination (10 per page).
+
+    Args:
+        expenses (list): List of expenses to display.
+    """
     page = 1
     loop = 0
     total_page = math.ceil(len(expenses)/10)
@@ -120,6 +168,11 @@ def paginated_expenses(expenses):
                     continue
                 
 def total_spent(expenses):
+    """Display total spending summary by category.
+
+    Args:
+        expenses (list): List of expenses to summarize.
+    """
     if not expenses:
         print("\n No expenses yet")
     else: 
@@ -144,7 +197,12 @@ def total_spent(expenses):
                 
         input("\nPress Enter to continue...")
 
-def filtered_expenses(expenses):  
+def filtered_expenses(expenses): 
+    """Filter and display expenses by category.
+
+    Args:
+        expenses (list): List of expenses to filter.
+    """ 
     print("\nCategories:")
             
     for i, cat in enumerate(CATEGORIES, 1):
@@ -174,6 +232,13 @@ def filtered_expenses(expenses):
             print("Please type in a number\n")
 
 def delete_expense(expenses):
+    """Delete an expense by ID with paginated view.
+
+    Shows expenses page by page, allows user to select an expense to delete.
+
+    Args:
+        expenses (list): List of expenses (modified in place).
+    """
     if not expenses:
         print("\nNo expenses to delete")
     else:
@@ -251,7 +316,12 @@ def delete_expense(expenses):
             input("\nPress Enter to continue...")
         
 def monthly_summary(expenses):
-     while True:
+    """Display spending summary for a specific month.
+
+    Args:
+        expenses (list): List of expenses to summarize.
+    """
+    while True:
         try:
             month = input("\nEnter month (YYYY-MM) (press enter to use the current month and year): ")
                     
@@ -300,8 +370,11 @@ def monthly_summary(expenses):
                       
         except ValueError:
             print("Please type in YYYY-MM format")
-         
+
+#Main Program
+     
 def main():
+    """Main program entry point. Handles menu navigation."""
     expenses = load_expenses()
     while True:
         display_menu()
@@ -338,4 +411,5 @@ def main():
             print("Input a number from 1 to 7")   
             input("Press enter to continue...") 
                               
-main()
+if __name__ == "__main__":
+    main()
